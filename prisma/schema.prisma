@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique // Unique identifier for the user
+  name      String?
+  email     String?     @unique
+  password  String?
+  image     String?
+  company   String?
+  bots      Bot[]
+  ratings   Rating[]
+  createdAt DateTime   @default(now())
+}
+
+model Bot {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  botName       String
+  description   String
+  category      String
+  demoVideoLink String
+  qrCodeImage   String
+  averageRating Float?
+  botImage      String
+  tags          String[]   @default([])
+  user          User       @relation(fields: [userId], references: [userId])
+  userId        String    
+  ratings       Rating[] 
+  createdAt     DateTime   @default(now())
+}
+
+model Rating {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  value     Int      
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.ObjectId
+  bot       Bot      @relation(fields: [botId], references: [id])
+  botId     String   @db.ObjectId
+  createdAt DateTime @default(now())
+
+  @@unique([userId, botId])
+}
+
