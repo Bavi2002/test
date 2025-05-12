@@ -7,6 +7,8 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { Suspense } from 'react'
+
 
 // import { getUserSession } from "@/app/lib/session";
 
@@ -55,7 +57,9 @@ export default function Header() {
 
         <div className="flex-1 flex justify-center mx-4 sm:mx-6 md:mx-8">
           <div className="relative w-40 sm:w-64 md:w-full">
+            <Suspense>
             <SearchBar onSearch={handleSearch} />
+            </Suspense>
           </div>
         </div>
 

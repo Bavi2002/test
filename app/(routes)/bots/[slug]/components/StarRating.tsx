@@ -43,8 +43,8 @@ export default function StarRating({ botId, onRatingSubmitted }: StarRatingProps
 
             setRating(0);
             if (onRatingSubmitted) onRatingSubmitted();
-        } catch (error: any) {
-            alert(error.message || "An error occurred while submitting the rating.");
+        } catch (error) {
+            alert("An error occurred while submitting the rating.");
             console.error("Rating submission error:", error);
         } finally {
             setIsSubmitting(false);

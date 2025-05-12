@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Loader2, UploadCloud } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
@@ -77,7 +77,6 @@ export default function ProfilePage() {
     bots: [],
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [formData, setFormData] = useState<UserFormData>({
     name: userSession?.user?.name || "",
@@ -107,7 +106,6 @@ export default function ProfilePage() {
     if (status !== "authenticated") return;
 
     setLoading(true);
-    setError(null);
 
     try {
       const response = await fetch(`/api/test`);
@@ -117,7 +115,6 @@ export default function ProfilePage() {
       const data: BotsResponse = await response.json();
       setBotsData(data);
     } catch (err) {
-      setError("Error loading bots. Please try again.");
       console.error("Fetch error:", err);
     } finally {
       setLoading(false);
@@ -427,7 +424,7 @@ export default function ProfilePage() {
           <div className="items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">My Bots</h2>
             <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-8 h-64">
-              <p className="text-lg text-gray-600 mb-4">You haven't created any bots yet.</p>
+              <p className="text-lg text-gray-600 mb-4">You haven &apos; t created any bots yet.</p>
               <Link href="/submit-bot">
                 <Button className="px-6">Create Your First Bot</Button>
               </Link>

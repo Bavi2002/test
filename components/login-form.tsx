@@ -16,7 +16,6 @@ import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
@@ -32,7 +31,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
@@ -53,7 +51,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
         router.push("/home");
       }
     } catch (err) {
-      console.error("An error occurred during login");
+      console.error(err,"An error occurred during login");
     }
   };
 

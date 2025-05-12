@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import * as z from "zod";
 import { put, del } from "@vercel/blob";
 import { getUserSession } from "@/lib/session";
-import { Session } from "inspector/promises";
 
-const registerSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  company: z.string().min(1, "Company name is required"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
+// const registerSchema = z.object({
+//   username: z.string().min(3, "Username must be at least 3 characters"),
+//   company: z.string().min(1, "Company name is required"),
+//   email: z.string().email("Invalid email address"),
+//   password: z.string().min(8, "Password must be at least 8 characters"),
+// });
 
 export async function POST(request: Request) {
   try {
@@ -75,7 +73,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
 
 
@@ -102,7 +100,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE() {
   try {
     const session = await getUserSession();
 

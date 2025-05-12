@@ -87,9 +87,9 @@ export function RegisterForm({
       } else {
         throw new Error(signInResponse?.error || "Sign-in failed");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Registration error:", error);
-      setError(error.message || "An error occurred during registration");
+      setError("An error occurred during registration");
     } finally {
       setIsLoading(false);
     }
